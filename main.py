@@ -16,6 +16,7 @@ except mysql.connector.Error as e:
     conn.rollback()
     sys.exit(1)
 
+
 # cur.execute("USES testing")
 # cur.execute("CREATE TABLE TEST("
 #             "ID NUMBER PRIMARY KEY )")
@@ -40,6 +41,7 @@ def update_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat
         (plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer, reg_number,))
     conn.commit()
 
+
 # Insert planes info
 # insert_plane_info(cur, "VN6221", "A321", 207, 16, 191, "AIRBUS")
 # insert_plane_info(cur, "VJ305", "A20N", 178, 8, 170, "AIRBUS")
@@ -49,4 +51,18 @@ def update_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat
 
 # Update plane info
 # update_plane_info(cur, "VN6221", "A321", 206, 16, 190, "AIRBUS")
+
+def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, destination, origin, note):
+    cur.execute("INSERT INTO FLIGHT(FLIGHTID, PLANEID, DEPARTURE_DATE, ARRIVAL_DATE, DESTINATION, ORIGIN, "
+                "NOTE) VALUES (%s, %s, %s, %s, %s, %s, %s)", (
+                    flight_id, plane_id, departure_date, arrrival_date, destination, origin, note))
+    cur.callproc("FILL_AVAILABLE_SEAT", (plane_id,))
+    conn.commit()
+
+
+# Test insert flight info
+insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
+insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
+insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
+insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
