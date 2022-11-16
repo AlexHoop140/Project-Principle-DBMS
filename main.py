@@ -110,8 +110,8 @@ def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, p
 
 # Test insert passenger info
 # insert_passenger_info(cur, "P000000100", "LE PHUONG TRUNG", "0945933710", "CAN THO", "092202006275")
-insert_passenger_info(cur, "P000000111", "NGU CONG KHANH", "0945933711", "CAN THO", "092202006271")
-insert_passenger_info(cur, "P000000200", "NGUYEN HOANG DANG HUY", "0911911711", "CAN THO", "092202006272")
-insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
-insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
+# insert_passenger_info(cur, "P000000111", "NGU CONG KHANH", "0945933711", "CAN THO", "092202006271")
+# insert_passenger_info(cur, "P000000200", "NGUYEN HOANG DANG HUY", "0911911711", "CAN THO", "092202006272")
+# insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
+# insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
 
