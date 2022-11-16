@@ -36,8 +36,8 @@ def insert_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat
 # Update plane information with registration number
 def update_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer):
     cur.execute(
-        "UPDATE PLANES SET PLANE_NAME=%s, NUMBER_OF_SEAT=%s, QUANTITY_SEAT_TYPE1=%s, QUANTITY_SEAT_TYPE2=%s, "
-        "MANUFACTURER=%s WHERE REG_NUMBER=%s",
+        "UPDATE PLANES SET PLANEID=%s, NUMBER_OF_SEAT=%s, QUANTITY_SEAT_TYPE1=%s, QUANTITY_SEAT_TYPE2=%s, "
+        "MANUFACTURER=%s WHERE PLANEID=%s",
         (plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer, reg_number,))
     conn.commit()
 
@@ -48,8 +48,6 @@ def update_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat
 # insert_plane_info(cur, "VN409", "B78X", 207, 16, 191, "BOEING")
 # insert_plane_info(cur, "VN248", "B77W", 427, 42, 385, "BOEING")
 # insert_plane_info(cur, "VN301", "A359", 305, 63, 242, "AIRBUS")
-#insert a test plane to test delete function
-#insert_plane_info(cur, "CK001", "0", 0, 0, 0, "0")
 
 # Update plane info
 # update_plane_info(cur, "VN6221", "A321", 206, 16, 190, "AIRBUS")
@@ -67,6 +65,7 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 # insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
 # insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
 # insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
+
 #insert a test plane to test delete function
 #insert_flight_info(cur, "K999999", "CK001", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
@@ -102,4 +101,17 @@ def delete_flight_infor(cur, flight_id):
 
 #test delete_flight_infor
 #delete_flight_infor(cur, "K999999")
+
+def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, passidno):
+    cur.execute("INSERT INTO PASSENGER VALUES(%s, %s, %s, %s, %s)",
+                (passid, passname, passphonenumber, passaddress, passidno,))
+    conn.commit()
+
+
+# Test insert passenger info
+# insert_passenger_info(cur, "P000000100", "LE PHUONG TRUNG", "0945933710", "CAN THO", "092202006275")
+insert_passenger_info(cur, "P000000111", "NGU CONG KHANH", "0945933711", "CAN THO", "092202006271")
+insert_passenger_info(cur, "P000000200", "NGUYEN HOANG DANG HUY", "0911911711", "CAN THO", "092202006272")
+insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
+insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
 
