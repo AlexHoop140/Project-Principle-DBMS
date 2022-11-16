@@ -61,13 +61,14 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 
 
 # Test insert flight info
-# insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
-# insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
-# insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
-# insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
+insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
+insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
+insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
+insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
-#insert a test plane to test delete function
-#insert_flight_info(cur, "K999999", "CK001", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
+
+# insert a test plane to test delete function
+# insert_flight_info(cur, "K999999", "CK001", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
 
 def delete_plane(cur, plane_id):
@@ -75,16 +76,19 @@ def delete_plane(cur, plane_id):
                 "WHERE PLANEID=%s", (plane_id,))
     conn.commit()
 
-#test delete_plane()
-#delete_plane(cur,"CK001")
+
+# test delete_plane()
+# delete_plane(cur,"CK001")
 
 def show_plane_infor(cur, plane_id):
     cur.execute("SELECT * FROM PLANES WHERE PLANEID=%s", (plane_id,))
     myresult = cur.fetchall()
     for x in myresult:
-          print(x)
-#test show_plane_infor()
-#show_plane_infor(cur,"VJ305")
+        print(x)
+
+
+# test show_plane_infor()
+# show_plane_infor(cur,"VJ305")
 
 def show_flight_infor(cur, flight_id):
     cur.execute("SELECT * FROM FLIGHT "
@@ -92,15 +96,18 @@ def show_flight_infor(cur, flight_id):
     myresult = cur.fetchall()
     for x in myresult:
         print(x)
-#test show_flight_infor()
-#show_flight_infor(cur,"S092911")
+
+
+# test show_flight_infor()
+# show_flight_infor(cur,"S092911")
 
 def delete_flight_infor(cur, flight_id):
     cur.execute("DELETE FROM FLIGHT WHERE FLIGHTID=%s", (flight_id,))
     conn.commit()
 
-#test delete_flight_infor
-#delete_flight_infor(cur, "K999999")
+
+# test delete_flight_infor
+# delete_flight_infor(cur, "K999999")
 
 def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, passidno):
     cur.execute("INSERT INTO PASSENGER VALUES(%s, %s, %s, %s, %s)",
