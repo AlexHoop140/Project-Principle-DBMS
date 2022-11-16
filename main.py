@@ -67,4 +67,5 @@ insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", 
 insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
 khanhne
+#khanh2
 
