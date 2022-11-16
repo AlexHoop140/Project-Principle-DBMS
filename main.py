@@ -122,3 +122,39 @@ def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, p
 # insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
 # insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
 
+#show all flight in an input date
+def show_flight_in_date(cur, origin, des, date):
+    cur.execute("SELECT * FROM FLIGHT "
+                "WHERE ORIGIN=%s AND DESTINATION=%s AND DEPARTURE_DATE=%s", (origin, des, date,))
+    myresult = cur.fetchall()
+    if len(myresult)==0:
+        print("No Flight")
+    else:
+        for x in myresult:
+            print(x)
+
+#show_flight_in_date(cur, "HAN", "SGN", "2022-09-25")
+
+#Empoyees information in Flight (input Flight ID)
+def employeeInfor_in_flight(cur, flightid):
+    cur.execute("SELECT EMPID, EMPNAME, EMPADD, EMPPHONENUM, EMPOSITION "
+                "FROM TICKET T JOIN EMPLOYEE E ON T.EMPID=E.EMPID "
+                "WHERE T.EMPID=%s", (flightid,))
+    myresult = cur.fetchall()
+    if len(myresult)==0:
+        print("Invalid FLIGHT ID")
+    else:
+        for x in myresult:
+            print(x)
+
+#Passenger information in Flight (input Flight ID)
+def passengerInfor_in_flight(cur, flightid):
+    cur.execute("SELECT PASSID, PASSNAME, PASSADDRESS, EMPPHONENUMBER, PASSIDNO "
+                "FROM TICKET T JOIN PASSENGER P ON T.EMPID=P.PASSID "
+                "WHERE T.EMPID=%s", (flightid,))
+    myresult = cur.fetchall()
+    if len(myresult)==0:
+        print("Invalid FLIGHT ID")
+    else:
+        for x in myresult:
+            print(x)
