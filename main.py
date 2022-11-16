@@ -65,9 +65,3 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 # insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
 # insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
 # insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
-
-# trung ne
-
-khanhne
-#khanh2
-#khanh3
