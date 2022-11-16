@@ -61,10 +61,10 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 
 
 # Test insert flight info
-insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
-insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
-insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
-insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
+# insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
+# insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
+# insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
+# insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
 
 # insert a test plane to test delete function
@@ -94,8 +94,11 @@ def show_flight_infor(cur, flight_id):
     cur.execute("SELECT * FROM FLIGHT "
                 "WHERE FLIGHTID=%s", (flight_id,))
     myresult = cur.fetchall()
-    for x in myresult:
-        print(x)
+    if myresult == 0:
+        print("No flight information in database")
+    else:
+        for x in myresult:
+            print(x)
 
 
 # test show_flight_infor()
@@ -121,6 +124,23 @@ def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, p
 # insert_passenger_info(cur, "P000000200", "NGUYEN HOANG DANG HUY", "0911911711", "CAN THO", "092202006272")
 # insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
 # insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
+
+def show_passenger_info(cur, passid):
+    cur.execute("SELECT * FROM PASSENGER "
+                "WHERE PASSID=%s", (passid,))
+    myresult = cur.fetchall()
+    if len(myresult) == 0:
+        print("No passenger information in database!")
+    else:
+        for x in myresult:
+            print(x)
+
+
+# show_passenger_info(cur, "P000000100")
+
+def delete_passenger_info(cur, passid):
+    cur.execute("DELETE FROM PASSENGER WHERE PASSID=%s", (passid,))
+    conn.commit()
 
 #show all flight in an input date
 def show_flight_in_date(cur, origin, des, date):
