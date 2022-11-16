@@ -70,4 +70,4 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 
 khanhne
 #khanh2
-
+#khanh3
