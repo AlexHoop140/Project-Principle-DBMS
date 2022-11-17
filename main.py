@@ -185,7 +185,7 @@ def delete_passenger_info(cur, passid):
 
 ##################################################
 
-################ EMPLOYEE SECTION ##################
+############### EMPLOYEE SECTION #################
 
 def insert_employee_info(cur, empid, empname, empaddress, empphonenumber, empposition):
     cur.execute("INSERT INTO EMPLOYEE VALUES(%s, %s, %s, %s, %s)",
@@ -194,10 +194,10 @@ def insert_employee_info(cur, empid, empname, empaddress, empphonenumber, emppos
 
 
 # Test insert employee info
-# insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CREW")
+# insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CABIN CREW")
 # insert_employee_info(cur, "E00002", "LE PHUONG TRUNG", "CAN THO", "0123456789", "PILOT")
-# insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CREW")
-# insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CREW")
+# insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CABIN CREW")
+# insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CABIN CREW")
 
 
 def show_employee_infor(cur, employee_id):
@@ -217,23 +217,22 @@ def show_employee_infor(cur, employee_id):
 
 def update_employee_info(cur, emp_id, emp_name, emp_add, emp_phonenum, emp_position):
     cur.execute(
-        "UPDATE EMPLOYEE SET EMPID=%s, EMPNAME=%s, EMPADD=%s, EMPPHONENUM=%s, "
+        "UPDATE EMPLOYEE SET EMPNAME=%s, EMPADD=%s, EMPPHONENUM=%s, "
         "EMPPOSITION=%s WHERE EMPID=%s",
-        (emp_id, emp_name, emp_add, emp_phonenum, emp_position))
+        (emp_name, emp_add, emp_phonenum, emp_position, emp_id,))
     conn.commit()
 
 
 # Test update_employee_info()
-# update_employee_info(cur, "E00005", "TRIEU GIA HUY", "CAN THO", "0199888777", "PILOT")
+# update_employee_info(cur, "E00002", "TRIEU GIA HUY", "CAN THO", "0199888777", "PILOT")
 
 
 def delete_employee_infor(cur, emp_id):
     cur.execute("DELETE FROM EMPLOYEE WHERE EMPID=%s", (emp_id,))
     conn.commit()
 
-
 # Test delete employee
-# delete_employee_info(cur,E00005)
+# delete_employee_infor(cur,"E00004")
 
 
 # show_flight_in_date(cur, "HAN", "SGN", "2022-09-25")
@@ -264,3 +263,7 @@ def passenger_infor_in_flight(cur, flightid):
             print(passenger)
 
 ##################################################
+
+################ TICKET SECTION ##################
+
+
