@@ -1,6 +1,7 @@
 import mysql.connector
 import sys
 
+############### CONNECTION SECTION ################
 try:
     conn = mysql.connector.connect(
         user="root",
@@ -17,6 +18,8 @@ except mysql.connector.Error as e:
     sys.exit(1)
 
 
+##################################################
+
 # cur.execute("USES testing")
 # cur.execute("CREATE TABLE TEST("
 #             "ID NUMBER PRIMARY KEY )")
@@ -25,6 +28,8 @@ except mysql.connector.Error as e:
 # for x in cur:
 #     print(x)
 
+
+################# PLANE SECTION ##################
 
 # Insert new plane information
 def insert_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer):
@@ -52,20 +57,6 @@ def update_plane_info(cur, reg_number, plane_name, qty_seat, qty_seat1, qty_seat
 # Update plane info
 # update_plane_info(cur, "VN6221", "A321", 206, 16, 190, "AIRBUS")
 
-def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, destination, origin, note):
-    cur.execute("INSERT INTO FLIGHT(FLIGHTID, PLANEID, DEPARTURE_DATE, ARRIVAL_DATE, DESTINATION, ORIGIN, "
-                "NOTE) VALUES (%s, %s, %s, %s, %s, %s, %s)", (
-                    flight_id, plane_id, departure_date, arrrival_date, destination, origin, note))
-    cur.callproc("FILL_AVAILABLE_SEAT", (plane_id,))
-    conn.commit()
-
-
-# Test insert flight info
-# insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
-# insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
-# insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
-# insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
-
 
 # insert a test plane to test delete function
 # insert_flight_info(cur, "K999999", "CK001", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
@@ -90,6 +81,25 @@ def show_plane_infor(cur, plane_id):
 # test show_plane_infor()
 # show_plane_infor(cur,"VJ305")
 
+##################################################
+
+################# FLIGHT SECTION #################
+
+def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, destination, origin, note):
+    cur.execute("INSERT INTO FLIGHT(FLIGHTID, PLANEID, DEPARTURE_DATE, ARRIVAL_DATE, DESTINATION, ORIGIN, "
+                "NOTE) VALUES (%s, %s, %s, %s, %s, %s, %s)", (
+                    flight_id, plane_id, departure_date, arrrival_date, destination, origin, note))
+    cur.callproc("FILL_AVAILABLE_SEAT", (plane_id,))
+    conn.commit()
+
+
+# Test insert flight info
+# insert_flight_info(cur, "T123456", "VJ305", "2022-09-24", "2022-09-24", "SGN", "VCT", "")
+# insert_flight_info(cur, "S092911", "VN248", "2022-09-25", "2022-09-25", "SGN", "HAN", "")
+# insert_flight_info(cur, "T901292", "VN6221", "2022-10-24", "2022-10-24", "VCT", "DAN", "")
+# insert_flight_info(cur, "S129323", "VN409", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
+
+
 def show_flight_infor(cur, flight_id):
     cur.execute("SELECT * FROM FLIGHT "
                 "WHERE FLIGHTID=%s", (flight_id,))
@@ -111,6 +121,22 @@ def delete_flight_infor(cur, flight_id):
 
 # test delete_flight_infor
 # delete_flight_infor(cur, "K999999")
+
+
+# show all flight in an input date
+def show_flight_by_date(cur, origin, des, date):
+    cur.execute("SELECT * FROM FLIGHT "
+                "WHERE ORIGIN=%s AND DESTINATION=%s AND DEPARTURE_DATE=%s", (origin, des, date,))
+    myresult = cur.fetchall()
+    if len(myresult) == 0:
+        print("No Flight")
+    else:
+        for x in myresult:
+            print(x)
+
+##################################################
+
+############### PASSENGER SECTION ################
 
 def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, passidno):
     cur.execute("INSERT INTO PASSENGER VALUES(%s, %s, %s, %s, %s)",
@@ -142,25 +168,22 @@ def delete_passenger_info(cur, passid):
     cur.execute("DELETE FROM PASSENGER WHERE PASSID=%s", (passid,))
     conn.commit()
 
-#show all flight in an input date
-def show_flight_in_date(cur, origin, des, date):
-    cur.execute("SELECT * FROM FLIGHT "
-                "WHERE ORIGIN=%s AND DESTINATION=%s AND DEPARTURE_DATE=%s", (origin, des, date,))
-    myresult = cur.fetchall()
-    if len(myresult)==0:
-        print("No Flight")
-    else:
-        for x in myresult:
-            print(x)
+
+##################################################
+
+################ EMPLOYEE SECTION ##################
+
 def insert_employee_info(cur, empid, empname, empaddress, empphonenumber, empposition):
     cur.execute("INSERT INTO EMPLOYEE VALUES(%s, %s, %s, %s, %s)",
                 (empid, empname, empaddress, empphonenumber, empposition,))
     conn.commit()
+
+
 # Test insert employee info
- insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CREW")
- insert_employee_info(cur, "E00002", "LE PHUONG TRUNG", "CAN THO", "0123456789", "PILOT")
- insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CREW")
- insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CREW")
+insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CREW")
+insert_employee_info(cur, "E00002", "LE PHUONG TRUNG", "CAN THO", "0123456789", "PILOT")
+insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CREW")
+insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CREW")
 
 
 def show_employee_infor(cur, employee_id):
@@ -169,6 +192,8 @@ def show_employee_infor(cur, employee_id):
     myresult = cur.fetchall()
     for x in myresult:
         print(x)
+
+
 # Test show_employee_infor()
 # show_employee_infor(cur,"E00001")
 
@@ -179,6 +204,8 @@ def update_employee_info(cur, emp_id, emp_name, emp_add, emp_phonenum, emp_posit
         "EMPPOSITION=%s WHERE EMPID=%s",
         (emp_id, emp_name, emp_add, emp_phonenum, emp_position))
     conn.commit()
+
+
 # Test update_employee_info()
 # update_employee_info(cur, "E00005", "TRIEU GIA HUY", "CAN THO", "0199888777", "PILOT")
 
@@ -186,33 +213,38 @@ def update_employee_info(cur, emp_id, emp_name, emp_add, emp_phonenum, emp_posit
 def delete_employee_infor(cur, emp_id):
     cur.execute("DELETE FROM EMPLOYEE WHERE EMPID=%s", (emp_id,))
     conn.commit()
+
+
 # Test delete employee
 # delete_employee_info(cur,E00005)
 
 
+# show_flight_in_date(cur, "HAN", "SGN", "2022-09-25")
 
-#show_flight_in_date(cur, "HAN", "SGN", "2022-09-25")
-
-#Empoyees information in Flight (input Flight ID)
+# Empoyees information in Flight (input Flight ID)
 def employeeInfor_in_flight(cur, flightid):
     cur.execute("SELECT EMPID, EMPNAME, EMPADD, EMPPHONENUM, EMPOSITION "
                 "FROM TICKET T JOIN EMPLOYEE E ON T.EMPID=E.EMPID "
                 "WHERE T.EMPID=%s", (flightid,))
     myresult = cur.fetchall()
-    if len(myresult)==0:
+    if len(myresult) == 0:
         print("Invalid FLIGHT ID")
     else:
         for x in myresult:
             print(x)
 
-#Passenger information in Flight (input Flight ID)
+
+# Passenger information in Flight (input Flight ID)
 def passengerInfor_in_flight(cur, flightid):
     cur.execute("SELECT PASSID, PASSNAME, PASSADDRESS, EMPPHONENUMBER, PASSIDNO "
                 "FROM TICKET T JOIN PASSENGER P ON T.EMPID=P.PASSID "
                 "WHERE T.EMPID=%s", (flightid,))
     myresult = cur.fetchall()
-    if len(myresult)==0:
+    if len(myresult) == 0:
         print("Invalid FLIGHT ID")
     else:
         for x in myresult:
             print(x)
+
+
+##################################################
