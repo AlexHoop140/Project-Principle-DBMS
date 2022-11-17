@@ -73,9 +73,12 @@ def delete_plane(cur, plane_id):
 
 def show_plane_infor(cur, plane_id):
     cur.execute("SELECT * FROM PLANES WHERE PLANEID=%s", (plane_id,))
-    myresult = cur.fetchall()
-    for x in myresult:
-        print(x)
+    planes = cur.fetchall()
+    if not planes:
+        print("No plane in database!")
+    else:
+        for plane in planes:
+            print(plane)
 
 
 # test show_plane_infor()
@@ -103,12 +106,12 @@ def insert_flight_info(cur, flight_id, plane_id, departure_date, arrrival_date, 
 def show_flight_infor(cur, flight_id):
     cur.execute("SELECT * FROM FLIGHT "
                 "WHERE FLIGHTID=%s", (flight_id,))
-    myresult = cur.fetchall()
-    if myresult == 0:
+    flights = cur.fetchall()
+    if not flights:
         print("No flight information in database")
     else:
-        for x in myresult:
-            print(x)
+        for flight in flights:
+            print(flight)
 
 
 # test show_flight_infor()
@@ -127,12 +130,13 @@ def delete_flight_infor(cur, flight_id):
 def show_flight_by_date(cur, origin, des, date):
     cur.execute("SELECT * FROM FLIGHT "
                 "WHERE ORIGIN=%s AND DESTINATION=%s AND DEPARTURE_DATE=%s", (origin, des, date,))
-    myresult = cur.fetchall()
-    if len(myresult) == 0:
+    flights = cur.fetchall()
+    if not flights:
         print("No Flight")
     else:
-        for x in myresult:
-            print(x)
+        for flight in flights:
+            print(flight)
+
 
 ##################################################
 
@@ -151,18 +155,28 @@ def insert_passenger_info(cur, passid, passname, passphonenumber, passaddress, p
 # insert_passenger_info(cur, "P000000123", "LE TRUNG KIEN", "0922223210", "AN GIANG", "092202006276")
 # insert_passenger_info(cur, "P000000124", "NGUYEN HOANG MINH", "0166999770", "VINH LONG", "092202006279")
 
-def show_passenger_info(cur, passid):
+def show_passenger_info_by_id(cur, passid):
     cur.execute("SELECT * FROM PASSENGER "
                 "WHERE PASSID=%s", (passid,))
-    myresult = cur.fetchall()
-    if len(myresult) == 0:
+    passengers = cur.fetchall()
+    if not passengers:
         print("No passenger information in database!")
     else:
-        for x in myresult:
-            print(x)
+        for passenger in passengers:
+            print(passenger)
 
 
 # show_passenger_info(cur, "P000000100")
+
+def show_all_passenger_info(cur):
+    cur.execute("SELECT * FROM PASSENGER")
+    passengers = cur.fetchall()
+    if not passengers:
+        print("No passenger in database!")
+    else:
+        for passenger in passengers:
+            print(passenger)
+
 
 def delete_passenger_info(cur, passid):
     cur.execute("DELETE FROM PASSENGER WHERE PASSID=%s", (passid,))
@@ -180,18 +194,21 @@ def insert_employee_info(cur, empid, empname, empaddress, empphonenumber, emppos
 
 
 # Test insert employee info
-insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CREW")
-insert_employee_info(cur, "E00002", "LE PHUONG TRUNG", "CAN THO", "0123456789", "PILOT")
-insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CREW")
-insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CREW")
+# insert_employee_info(cur, "E00001", "NGUYEN HOANG DANG HUY", "CAN THO", "0832898421", "CREW")
+# insert_employee_info(cur, "E00002", "LE PHUONG TRUNG", "CAN THO", "0123456789", "PILOT")
+# insert_employee_info(cur, "E00003", "NGU CONG KHANH", "CAN THO", "0987654321", "CREW")
+# insert_employee_info(cur, "E00004", "LE TRUNG KIEN", "AN GIANG", "0909121212", "CREW")
 
 
 def show_employee_infor(cur, employee_id):
-    cur.execute("SELECT * FROM FLIGHT "
+    cur.execute("SELECT * FROM EMPLOYEE "
                 "WHERE EMPID=%s", (employee_id,))
-    myresult = cur.fetchall()
-    for x in myresult:
-        print(x)
+    employees = cur.fetchall()
+    if not employees:
+        print("No employee in database")
+    else:
+        for employee in employees:
+            print(employee)
 
 
 # Test show_employee_infor()
@@ -221,30 +238,29 @@ def delete_employee_infor(cur, emp_id):
 
 # show_flight_in_date(cur, "HAN", "SGN", "2022-09-25")
 
-# Empoyees information in Flight (input Flight ID)
-def employeeInfor_in_flight(cur, flightid):
+# Employees information in Flight (input Flight ID)
+def employee_infor_in_flight(cur, flightid):
     cur.execute("SELECT EMPID, EMPNAME, EMPADD, EMPPHONENUM, EMPOSITION "
                 "FROM TICKET T JOIN EMPLOYEE E ON T.EMPID=E.EMPID "
                 "WHERE T.EMPID=%s", (flightid,))
-    myresult = cur.fetchall()
-    if len(myresult) == 0:
+    employees = cur.fetchall()
+    if not employees:
         print("Invalid FLIGHT ID")
     else:
-        for x in myresult:
-            print(x)
+        for employee in employees:
+            print(employee)
 
 
 # Passenger information in Flight (input Flight ID)
-def passengerInfor_in_flight(cur, flightid):
-    cur.execute("SELECT PASSID, PASSNAME, PASSADDRESS, EMPPHONENUMBER, PASSIDNO "
+def passenger_infor_in_flight(cur, flightid):
+    cur.execute("SELECT PASSID, PASSNAME, PASSADDRESS, PASSPHONENUMBER, PASSIDNO "
                 "FROM TICKET T JOIN PASSENGER P ON T.EMPID=P.PASSID "
                 "WHERE T.EMPID=%s", (flightid,))
-    myresult = cur.fetchall()
-    if len(myresult) == 0:
-        print("Invalid FLIGHT ID")
+    passengers = cur.fetchall()
+    if not passengers:
+        print("Invalid passenger ID")
     else:
-        for x in myresult:
-            print(x)
-
+        for passenger in passengers:
+            print(passenger)
 
 ##################################################
