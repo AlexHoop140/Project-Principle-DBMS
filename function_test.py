@@ -1,6 +1,7 @@
 import main as mn
 import mysql.connector
 import sys
+import random
 
 ############### CONNECTION SECTION ################
 try:
@@ -27,7 +28,7 @@ except mysql.connector.Error as e:
 # mn.insert_plane_info(cur, "VJ305", "A20N", 178, 8, 170, "AIRBUS")
 # mn.insert_plane_info(cur, "VN409", "B78X", 207, 16, 191, "BOEING")
 # mn.insert_plane_info(cur, "VN248", "B77W", 427, 42, 385, "BOEING")
-mn.insert_plane_info(conn, cur, "VN12", "A320", 170, 30, 140, "AIRBUS")
+# mn.insert_plane_info(conn, cur, "VN12", "A320", 170, 30, 140, "AIRBUS")
 
 # Update plane info
 # mn.update_plane_info(conn, cur, "VN6221", "A321", 206, 16, 190, "AIRBUS")
@@ -57,6 +58,20 @@ mn.insert_plane_info(conn, cur, "VN12", "A320", 170, 30, 140, "AIRBUS")
 
 # test delete_flight_infor
 # delete_flight_infor(conn, cursor, "K999999")
+
+# flights = mn.get_flight_info_by_date(cur, "HAN", "SGN", "2022-09-25", "2022-09-25")
+# list = [flights[0][7], flights[0][6]]
+# print(list[0])
+#
+# ticket_id = mn.create_ticket_id("S092911", "P000000111", "LE PHUONG TRUNG", 2, "SGN", "HAN")
+# print(ticket_id)
+#
+# shuffle_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+# random.shuffle(shuffle_list)
+# print(str(shuffle_list[:5]))
+
+mn.create_ticket(cur, "P000000100", "LE PHUONG TRUNG", 1, "DAD", "VCA", "2022-10-24", "2022-10-24", False, 1)
+
 
 ##################################################
 
