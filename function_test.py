@@ -37,7 +37,7 @@ except mysql.connector.Error as e:
 # mn.insert_flight_info(conn, cur, "K999999", "CK001", "2022-12-23", "2022-12-24", "HAN", "LAX", "")
 
 # test delete_plane()
-# mn.delete_plane(conn, cur, "CK001")
+#mn.delete_plane(conn, cur, "CK01")
 
 # test show_plane_infor()
 #mn.show_plane_infor(cur, "VJ305")
@@ -122,9 +122,3 @@ except mysql.connector.Error as e:
 
 
 ##################################################
-def insert_plane_info_test(conn, cursor, reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer):
-    cur.execute("INSERT INTO PLANES VALUES(%s, %s, %s, %s, %s, %s)",
-                   (reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer))
-    conn.commit()
-
-insert_plane_info_test(conn, cur,"CK01","CKst","100","50","50", "AIRBUS")
