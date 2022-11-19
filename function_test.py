@@ -40,7 +40,7 @@ except mysql.connector.Error as e:
 # mn.delete_plane(conn, cur, "CK001")
 
 # test show_plane_infor()
-# mn.show_plane_infor(cur, "VJ305")
+#mn.show_plane_infor(cur, "VJ305")
 
 ##################################################
 
@@ -55,6 +55,7 @@ except mysql.connector.Error as e:
 
 # test show_flight_infor()
 # show_flight_infor(cursor,"S092911")
+#mn.show_flight_infor(cur,"S092911")
 
 # test delete_flight_infor
 # delete_flight_infor(conn, cursor, "K999999")
@@ -70,7 +71,7 @@ except mysql.connector.Error as e:
 # random.shuffle(shuffle_list)
 # print(str(shuffle_list[:5]))
 
-mn.create_ticket(cur, "P000000100", "LE PHUONG TRUNG", 1, "DAD", "VCA", "2022-10-24", "2022-10-24", False, 1)
+#mn.create_ticket(cur, "P000000100", "LE PHUONG TRUNG", 1, "DAD", "VCA", "2022-10-24", "2022-10-24", False, 1)
 
 
 ##################################################
@@ -121,3 +122,9 @@ mn.create_ticket(cur, "P000000100", "LE PHUONG TRUNG", 1, "DAD", "VCA", "2022-10
 
 
 ##################################################
+def insert_plane_info_test(conn, cursor, reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer):
+    cur.execute("INSERT INTO PLANES VALUES(%s, %s, %s, %s, %s, %s)",
+                   (reg_number, plane_name, qty_seat, qty_seat1, qty_seat2, manufacturer))
+    conn.commit()
+
+insert_plane_info_test(conn, cur,"CK01","CKst","100","50","50", "AIRBUS")
