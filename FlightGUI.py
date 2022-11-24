@@ -464,7 +464,7 @@ def flight_management_click():
 
     flight_background_img = PhotoImage(file=f"img/Flight/background.png")
     flight_background = canvas.create_image(
-        300.0, 445.0,
+        300.0, 473.0,
         image=flight_background_img)
 
     flight_entry0_img = PhotoImage(file=f"img/Flight/img_textBox0.png")
@@ -688,6 +688,7 @@ def employee_management_click():
 
     employee_window.geometry("600x900")
     employee_window.configure(bg="#000000")
+    employee_window.title('Employee Management')
     canvas = Canvas(
         employee_window,
         bg="#000000",
