@@ -683,6 +683,193 @@ def flight_management_click():
         width=187,
         height=62)
 
+def employee_management_click():
+    employee_window = Toplevel(window)
+
+    employee_window.geometry("600x900")
+    employee_window.configure(bg="#000000")
+    canvas = Canvas(
+        employee_window,
+        bg="#000000",
+        height=900,
+        width=600,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge")
+    canvas.place(x=0, y=0)
+
+    # set global all img
+    global employee_background_img
+    global employee_background_img
+    global employee_entry0_img
+    global employee_entry1_img
+    global employee_entry2_img
+    global employee_entry3_img
+    global employee_entry4_img
+    global employee_entry5_img
+    global employee_img0
+    global employee_img1
+    global employee_img2
+    global employee_img3
+
+    employee_background_img = PhotoImage(file=f"img/Employee/background.png")
+    employee_background = canvas.create_image(
+        300.0, 434.0,
+        image=employee_background_img)
+
+    employee_entry0_img = PhotoImage(file=f"img/Employee/img_textBox0.png")
+    employee_entry0_bg = canvas.create_image(
+        289.0, 99.5,
+        image=employee_entry0_img)
+
+    employee_entry0 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry0.place(
+        x=81, y=81,
+        width=416,
+        height=35)
+
+    employee_entry1_img = PhotoImage(file=f"img/Employee/img_textBox1.png")
+    employee_entry1_bg = canvas.create_image(
+        289.0, 177.5,
+        image=employee_entry1_img)
+
+    employee_entry1 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry1.place(
+        x=81, y=159,
+        width=416,
+        height=35)
+
+    employee_entry2_img = PhotoImage(file=f"img/Employee/img_textBox2.png")
+    employee_entry2_bg = canvas.create_image(
+        287.0, 260.5,
+        image=employee_entry2_img)
+
+    employee_entry2 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry2.place(
+        x=79, y=242,
+        width=416,
+        height=35)
+
+    employee_entry3_img = PhotoImage(file=f"img/Employee/img_textBox3.png")
+    employee_entry3_bg = canvas.create_image(
+        287.0, 338.5,
+        image=employee_entry3_img)
+
+    employee_entry3 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry3.place(
+        x=79, y=320,
+        width=416,
+        height=35)
+
+    employee_entry4_img = PhotoImage(file=f"img/Employee/img_textBox4.png")
+    employee_entry4_bg = canvas.create_image(
+        287.0, 415.5,
+        image=employee_entry4_img)
+
+    employee_entry4 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry4.place(
+        x=79, y=397,
+        width=416,
+        height=35)
+
+    employee_img0 = PhotoImage(file=f"img/Employee/img0.png")
+    employee_b0 = Button(
+        employee_window,
+        image=employee_img0,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    employee_b0.place(
+        x=195, y=474,
+        width=187,
+        height=62)
+
+    employee_img1 = PhotoImage(file=f"img/Employee/img1.png")
+    employee_b1 = Button(
+        employee_window,
+        image=employee_img1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    employee_b1.place(
+        x=195, y=546,
+        width=187,
+        height=62)
+
+    employee_entry5_img = PhotoImage(file=f"img/Employee/img_textBox5.png")
+    employee_entry5_bg = canvas.create_image(
+        290.0, 674.5,
+        image=employee_entry5_img)
+
+    employee_entry5 = Entry(
+        employee_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    employee_entry5.place(
+        x=82, y=656,
+        width=416,
+        height=35)
+
+    employee_img2 = PhotoImage(file=f"img/Employee/img2.png")
+    employee_b2 = Button(
+        employee_window,
+        image=employee_img2,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    employee_b2.place(
+        x=83, y=741,
+        width=187,
+        height=62)
+
+    employee_img3 = PhotoImage(file=f"img/Employee/img3.png")
+    employee_b3 = Button(
+        employee_window,
+        image=employee_img3,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    employee_b3.place(
+        x=308, y=741,
+        width=187,
+        height=62)
+
+
 img0 = PhotoImage(file = f"img/AirportManagement/img0.png")
 passenger_button = Button(
     image = img0,
@@ -701,7 +888,7 @@ employee_button = Button(
     image = img1,
     borderwidth = 0,
     highlightthickness = 0,
-    command = plane_management_click,
+    command = employee_management_click,
     relief = "flat")
 
 employee_button.place(
