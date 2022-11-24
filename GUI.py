@@ -8,7 +8,6 @@ root = Tk()
 root.title('DBMS Project')
 root.geometry("400x600")
 
-
 ############### CONNECTION SECTION ################
 try:
     conn = mysql.connector.connect(
@@ -26,9 +25,9 @@ except mysql.connector.Error as e:
     sys.exit(1)
 
 
-#Plane submit function
+# Plane submit function
 def plane_submit():
-    #create database connection
+    # create database connection
     conn = mysql.connector.connect(
         user="root",
         password="FzrTscd0aGODkVIUXtsa",
@@ -52,13 +51,14 @@ def plane_submit():
     conn.commit()
     conn.close()
 
-    #clear current type in content
+    # clear current type in content
     p_id.delete(0, END)
     p_name.delete(0, END)
     p_total_seat.delete(0, END)
     p_seat1.delete(0, END)
     p_seat2.delete(0, END)
     p_manu.delete(0, END)
+
 
 def plane_show():
     conn = mysql.connector.connect(
@@ -84,6 +84,7 @@ def plane_show():
     conn.commit()
     conn.close()
 
+
 def plane_delete():
     conn = mysql.connector.connect(
         user="root",
@@ -94,13 +95,14 @@ def plane_delete():
     )
     cur = conn.cursor()
 
-    #delete
-    cur.execute("DELETE from PLANES WHERE PLANEID=" + "\'" +(p_selected.get()) + "\'")
+    # delete
+    cur.execute("DELETE from PLANES WHERE PLANEID=" + "\'" + (p_selected.get()) + "\'")
 
     p_selected.delete(0, END)
 
     conn.commit()
     conn.close()
+
 
 def update():
     conn = mysql.connector.connect(
@@ -119,7 +121,7 @@ def update():
                 "TYPE1SEAT = %s, "
                 "TYPE2SEAT = %s,"
                 "MANUFACTURER = %s "
-                "WHERE PLANEID=" + "\'" +(p_selected.get()) + "\'",
+                "WHERE PLANEID=" + "\'" + (p_selected.get()) + "\'",
                 (
                     p_id_editor.get(),
                     p_name_editor.get(),
@@ -132,6 +134,8 @@ def update():
     conn.commit()
     conn.close()
     editor.destroy()
+
+
 def edit():
     global editor
     editor = Tk()
@@ -147,11 +151,11 @@ def edit():
     )
     cur = conn.cursor()
 
-    #Edit plane
-    cur.execute("SELECT * FROM PLANES WHERE PLANEID=" + "\'" +(p_selected.get()) + "\'")
+    # Edit plane
+    cur.execute("SELECT * FROM PLANES WHERE PLANEID=" + "\'" + (p_selected.get()) + "\'")
     records = cur.fetchall()
 
-    #define global var
+    # define global var
     global p_id_editor
     global p_name_editor
     global p_total_seat_editor
@@ -187,7 +191,7 @@ def edit():
     plane_manuf_label_editor = Label(editor, text="Manufacturer")
     plane_manuf_label_editor.grid(row=5, column=0)
 
-    #Insert default value
+    # Insert default value
     for record in records:
         p_id_editor.insert(0, record[0])
         p_name_editor.insert(0, record[1])
@@ -204,8 +208,12 @@ def edit():
     conn.close()
 
 
+# Menu
+# menu = Label(root, text="Menu")
+# menu =
 
-#Plane textbox
+
+# Plane textbox
 p_id = Entry(root, width=30)
 p_id.grid(row=0, column=1, padx=20)
 p_name = Entry(root, width=30)
@@ -221,7 +229,7 @@ p_manu.grid(row=5, column=1, padx=20)
 p_selected = Entry(root, width=30)
 p_selected.grid(row=8, column=1, padx=20)
 
-#Plane insert textbox label
+# Plane insert textbox label
 plane_id_label = Label(root, text="Plane ID")
 plane_id_label.grid(row=0, column=0)
 plane_name_label = Label(root, text="Plane Name")
@@ -239,18 +247,21 @@ plane_selected_label.grid(row=8, column=0)
 
 # Plane submit button
 p_submit_btn = Button(root, text="Add New Plane To Database", command=plane_submit)
-p_submit_btn.grid(row=6,column=0, columnspan=2, padx=10, pady=10,ipadx=100)
+p_submit_btn.grid(row=6, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
 # Plane show button
 p_show_btn = Button(root, text="Show all Planes information", command=plane_show)
-p_show_btn.grid(row=7,column=0, columnspan=2, padx=10, pady=10,ipadx=100)
+p_show_btn.grid(row=7, column=0, columnspan=2, padx=10, pady=10, ipadx=100)
 
-#Plane Delete button
+# Plane Delete button
 p_delete_btn = Button(root, text="Delete Plane", command=plane_delete)
-p_delete_btn.grid(row=9,column=0, columnspan=2, padx=10, pady=10,ipadx=137)
+p_delete_btn.grid(row=9, column=0, columnspan=2, padx=10, pady=10, ipadx=137)
 
-#Plane Update button
+# Plane Update button
 p_delete_btn = Button(root, text="Update Plane", command=edit)
-p_delete_btn.grid(row=11,column=0, columnspan=2, padx=10, pady=10,ipadx=137)
+p_delete_btn.grid(row=11, column=0, columnspan=2, padx=10, pady=10, ipadx=137)
+
+
+
 
 conn.close()
 
