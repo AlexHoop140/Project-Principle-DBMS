@@ -221,6 +221,9 @@ background = canvas.create_image(
     808.0, 229.0,
     image=background_img)
 
+def btn_clicked():
+    print("Button Clicked")
+
 def plane_management_click():
     plane_window = Toplevel(window)
 
@@ -243,12 +246,12 @@ def plane_management_click():
         165.0, 423.5,
         image=plane_background_img)
 
-    global plane_id_entry
-    global plane_name_entry
-    global plane_totalseat_entry
-    global plane_seat1_entry
-    global plane_seat2_entry
-    global plane_manu_entry
+    global plane_id_entry_img
+    global plane_name_entry_img
+    global plane_totalseat_entry_img
+    global plane_seat1_entry_img
+    global plane_seat2_entry_img
+    global plane_manu_entry_img
 
 
     plane_id_entry_img = PhotoImage(file=f"img/Plane/img_textBox0.png")
@@ -426,68 +429,321 @@ def plane_management_click():
         width=187,
         height=62)
 
+def flight_management_click():
+    flight_window = Toplevel(window)
+
+    flight_window.geometry("600x900")
+    flight_window.configure(bg="#9ba4b4")
+    flight_window.title('Flight Management')
+    canvas = Canvas(
+        flight_window,
+        bg="#9ba4b4",
+        height=900,
+        width=600,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge")
+    canvas.place(x=0, y=0)
+
+    # set global all img
+    global flight_background_img
+    global flight_entry0_img
+    global flight_entry1_img
+    global flight_entry2_img
+    global flight_entry3_img
+    global flight_entry4_img
+    global flight_entry5_img
+    global flight_entry6_img
+    global flight_entry7_img
+    global flight_entry8_img
+    global flight_entry9_img
+    global flight_img0
+    global flight_img1
+    global flight_img2
+    global flight_img3
+
+    flight_background_img = PhotoImage(file=f"img/Flight/background.png")
+    flight_background = canvas.create_image(
+        300.0, 445.0,
+        image=flight_background_img)
+
+    flight_entry0_img = PhotoImage(file=f"img/Flight/img_textBox0.png")
+    flight_entry0_bg = canvas.create_image(
+        289.0, 99.5,
+        image=flight_entry0_img)
+
+    flight_entry0 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry0.place(
+        x=81, y=81,
+        width=416,
+        height=35)
+
+    flight_entry1_img = PhotoImage(file=f"img/Flight/img_textBox1.png")
+    flight_entry1_bg = canvas.create_image(
+        289.0, 177.5,
+        image=flight_entry1_img)
+
+    flight_entry1 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry1.place(
+        x=81, y=159,
+        width=416,
+        height=35)
+
+    flight_entry2_img = PhotoImage(file=f"img/Flight/img_textBox2.png")
+    flight_entry2_bg = canvas.create_image(
+        175.5, 254.5,
+        image=flight_entry2_img)
+
+    flight_entry2 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry2.place(
+        x=82, y=236,
+        width=187,
+        height=35)
+
+    flight_entry3_img = PhotoImage(file=f"img/Flight/img_textBox3.png")
+    flight_entry3_bg = canvas.create_image(
+        404.5, 254.5,
+        image=flight_entry3_img)
+
+    flight_entry3 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry3.place(
+        x=311, y=236,
+        width=187,
+        height=35)
+
+    flight_entry4_img = PhotoImage(file=f"img/Flight/img_textBox4.png")
+    flight_entry4_bg = canvas.create_image(
+        175.5, 331.5,
+        image=flight_entry4_img)
+
+    flight_entry4 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry4.place(
+        x=82, y=313,
+        width=187,
+        height=35)
+
+    flight_entry5_img = PhotoImage(file=f"img/Flight/img_textBox5.png")
+    flight_entry5_bg = canvas.create_image(
+        404.5, 331.5,
+        image=flight_entry5_img)
+
+    flight_entry5 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry5.place(
+        x=311, y=313,
+        width=187,
+        height=35)
+
+    flight_entry6_img = PhotoImage(file=f"img/Flight/img_textBox6.png")
+    flight_entry6_bg = canvas.create_image(
+        175.5, 407.5,
+        image=flight_entry6_img)
+
+    flight_entry6 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry6.place(
+        x=82, y=389,
+        width=187,
+        height=35)
+
+    flight_entry7_img = PhotoImage(file=f"img/Flight/img_textBox7.png")
+    flight_entry7_bg = canvas.create_image(
+        404.5, 407.5,
+        image=flight_entry7_img)
+
+    flight_entry7 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry7.place(
+        x=311, y=389,
+        width=187,
+        height=35)
+
+    flight_entry8_img = PhotoImage(file=f"img/Flight/img_textBox8.png")
+    flight_entry8_bg = canvas.create_image(
+        288.0, 483.5,
+        image=flight_entry8_img)
+
+    flight_entry8 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry8.place(
+        x=80, y=465,
+        width=416,
+        height=35)
+
+    flight_img0 = PhotoImage(file=f"img/Flight/img0.png")
+    flight_b0 = Button(
+        flight_window,
+        image=flight_img0,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    flight_b0.place(
+        x=83, y=530,
+        width=187,
+        height=62)
+
+    flight_img1 = PhotoImage(file=f"img/Flight/img1.png")
+    flight_b1 = Button(
+        flight_window,
+        image=flight_img1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    flight_b1.place(
+        x=306, y=530,
+        width=187,
+        height=62)
+
+    flight_entry9_img = PhotoImage(file=f"img/Flight/img_textBox9.png")
+    flight_entry9_bg = canvas.create_image(
+        290.0, 674.5,
+        image=flight_entry9_img)
+
+    flight_entry9 = Entry(
+        flight_window,
+        bd=0,
+        bg="#d9d9d9",
+        highlightthickness=0)
+
+    flight_entry9.place(
+        x=82, y=656,
+        width=416,
+        height=35)
+
+    flight_img2 = PhotoImage(file=f"img/Flight/img2.png")
+    flight_b2 = Button(
+        flight_window,
+        image=flight_img2,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    flight_b2.place(
+        x=83, y=741,
+        width=187,
+        height=62)
+
+    flight_img3 = PhotoImage(file=f"img/Flight/img3.png")
+    flight_b3 = Button(
+        flight_window,
+        image=flight_img3,
+        borderwidth=0,
+        highlightthickness=0,
+        command=btn_clicked,
+        relief="flat")
+
+    flight_b3.place(
+        x=308, y=741,
+        width=187,
+        height=62)
 
 img0 = PhotoImage(file = f"img/AirportManagement/img0.png")
-b0 = Button(
+passenger_button = Button(
     image = img0,
     borderwidth = 0,
     highlightthickness = 0,
     command = plane_management_click,
     relief = "flat")
 
-b0.place(
+passenger_button.place(
     x = 828, y = 547,
     width = 338,
     height = 66)
 
 img1 = PhotoImage(file = f"img/AirportManagement/img1.png")
-b1 = Button(
+employee_button = Button(
     image = img1,
     borderwidth = 0,
     highlightthickness = 0,
     command = plane_management_click,
     relief = "flat")
 
-b1.place(
+employee_button.place(
     x = 830, y = 453,
     width = 337,
     height = 69)
 
 img2 = PhotoImage(file = f"img/AirportManagement/img2.png")
-b2 = Button(
+ticket_button = Button(
     image = img2,
     borderwidth = 0,
     highlightthickness = 0,
     command = plane_management_click,
     relief = "flat")
 
-b2.place(
+ticket_button.place(
     x = 830, y = 363,
     width = 338,
     height = 66)
 
 img3 = PhotoImage(file = f"img/AirportManagement/img3.png")
-b3 = Button(
+flight_button = Button(
     image = img3,
     borderwidth = 0,
     highlightthickness = 0,
-    command = plane_management_click,
+    command = flight_management_click,
     relief = "flat")
 
-b3.place(
+flight_button.place(
     x = 828, y = 268,
     width = 338,
     height = 66)
 
 img4 = PhotoImage(file = f"img/AirportManagement/img4.png")
-b4 = Button(
+plane_button = Button(
     image = img4,
     borderwidth = 0,
     highlightthickness = 0,
     command = plane_management_click,
     relief = "flat")
 
-b4.place(
+plane_button.place(
     x = 828, y = 178,
     width = 338,
     height = 66)
