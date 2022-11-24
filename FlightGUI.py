@@ -7,7 +7,7 @@ import random
 
 
 window = Tk()
-window.title('Flight Management')
+window.title('Airport Management')
 window.geometry("1280x720")
 window.configure(bg = "#171717")
 canvas = Canvas(
@@ -115,7 +115,7 @@ def plane_delete():
     conn.commit()
     conn.close()
 
-def update():
+def plane_update():
     conn = mysql.connector.connect(
         user="root",
         password="FzrTscd0aGODkVIUXtsa",
@@ -210,7 +210,7 @@ def edit():
         p_manu_editor.insert(0, record[5])
 
     # Plane update Save button
-    p_save_btn = Button(editor, text="Save", command=update)
+    p_save_btn = Button(editor, text="Save", command=plane_update)
     p_save_btn.grid(row=6, column=0, columnspan=2, padx=10, pady=10, ipadx=145)
 
     conn.commit()
