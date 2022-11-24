@@ -216,7 +216,7 @@ def edit():
     conn.commit()
     conn.close()
 
-background_img = PhotoImage(file = f"img/background.png")
+background_img = PhotoImage(file = f"img/AirportManagement/background.png")
 background = canvas.create_image(
     808.0, 229.0,
     image=background_img)
@@ -427,7 +427,7 @@ def plane_management_click():
         height=62)
 
 
-img0 = PhotoImage(file = f"img/img0.png")
+img0 = PhotoImage(file = f"img/AirportManagement/img0.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,
@@ -440,7 +440,7 @@ b0.place(
     width = 338,
     height = 66)
 
-img1 = PhotoImage(file = f"img/img1.png")
+img1 = PhotoImage(file = f"img/AirportManagement/img1.png")
 b1 = Button(
     image = img1,
     borderwidth = 0,
@@ -453,7 +453,7 @@ b1.place(
     width = 337,
     height = 69)
 
-img2 = PhotoImage(file = f"img/img2.png")
+img2 = PhotoImage(file = f"img/AirportManagement/img2.png")
 b2 = Button(
     image = img2,
     borderwidth = 0,
@@ -466,7 +466,7 @@ b2.place(
     width = 338,
     height = 66)
 
-img3 = PhotoImage(file = f"img/img3.png")
+img3 = PhotoImage(file = f"img/AirportManagement/img3.png")
 b3 = Button(
     image = img3,
     borderwidth = 0,
@@ -479,7 +479,7 @@ b3.place(
     width = 338,
     height = 66)
 
-img4 = PhotoImage(file = f"img/img4.png")
+img4 = PhotoImage(file = f"img/AirportManagement/img4.png")
 b4 = Button(
     image = img4,
     borderwidth = 0,
