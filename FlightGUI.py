@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import ttk
+
 import main as mn
 import mysql.connector
 import sys
@@ -81,16 +83,55 @@ def plane_show():
     cur = conn.cursor()
 
     # Show database
-    plane_show = Toplevel(window)
     cur.execute("SELECT PLANEID, PLANENAME, TOTALSEAT, TYPE1SEAT,TYPE2SEAT, MANUFACTURER FROM PLANES")
-    records = cur.fetchall()
+    planes = cur.fetchall()
 
-    print_record = ''
-    for record in records:
-        print_record += str(record) + "\n"
+    # print_record = ''
+    # for record in records:
+    #     print_record += str(record) + "\n"
 
-    show_label = Label(plane_show, text=print_record)
-    show_label.grid(row=10, column=0, columnspan=2)
+    # show_label = Label(plane_show, text=print_record)
+    # show_label.grid(row=10, column=0, columnspan=2)
+
+    available_planes_window = Toplevel()
+    available_planes_window.title("All planes information")
+
+    all_planes_table_view = ttk.Treeview(available_planes_window)
+
+    # User Interface Section
+    # Define column
+    all_planes_table_view['columns'] = ("Plane ID", "Plane Name", "Total Seat",
+                                        "Number of seat 1", "Number of seat 2", "Manufacturer")
+
+    # Format columns
+    all_planes_table_view.column("#0", width=0, stretch=NO)
+    all_planes_table_view.column("Plane ID", anchor=W, width=80)
+    all_planes_table_view.column("Plane Name", anchor=W, width=80)
+    all_planes_table_view.column("Total Seat", anchor=E, width=80)
+    all_planes_table_view.column("Number of seat 1", anchor=E, width=80)
+    all_planes_table_view.column("Number of seat 2", anchor=E, width=80)
+    all_planes_table_view.column("Manufacturer", anchor=W, width=120)
+
+    # Create heading
+    all_planes_table_view.heading("#0", text="", anchor=W)
+    all_planes_table_view.heading("Plane ID", text="Plane ID", anchor=CENTER)
+    all_planes_table_view.heading("Plane Name", text="Plane Name", anchor=CENTER)
+    all_planes_table_view.heading("Total Seat", text="Total Seat", anchor=CENTER)
+    all_planes_table_view.heading("Number of seat 1", text="Available seat type 1", anchor=CENTER)
+    all_planes_table_view.heading("Number of seat 2", text="Available seat type 2", anchor=CENTER)
+    all_planes_table_view.heading("Manufacturer", text="Manufacturer", anchor=CENTER)
+
+    count = 0
+    for plane in planes:
+        all_planes_table_view.insert(parent='', index='end', iid=str(count), text="", values=(str(plane[0]),
+                                                                                              str(plane[1]),
+                                                                                              str(plane[2]),
+                                                                                              str(plane[3]),
+                                                                                              str(plane[4]),
+                                                                                              str(plane[5])))
+        count += 1
+
+    all_planes_table_view.pack(padx=20, pady=20)
 
     conn.commit()
     conn.close()
@@ -265,16 +306,61 @@ def flight_show():
     cur = conn.cursor()
 
     # Show database
-    flight_show = Toplevel(window)
     cur.execute("SELECT * FROM FLIGHT")
-    records = cur.fetchall()
+    flights = cur.fetchall()
 
-    print_record = ''
-    for record in records:
-        print_record += str(record) + "\n"
+    # print_record = ''
+    # for record in records:
+    #     print_record += str(record) + "\n"
+    #
+    # show_label = Label(flight_show, text=print_record)
+    # show_label.grid(row=10, column=0, columnspan=2)
 
-    show_label = Label(flight_show, text=print_record)
-    show_label.grid(row=10, column=0, columnspan=2)
+    available_flights_window = Toplevel()
+    available_flights_window.title("All flights information")
+
+    all_flight_table_view = ttk.Treeview(available_flights_window)
+
+    # User Interface Section
+    # Define column
+    all_flight_table_view['columns'] = ("Flight ID", "Plane ID", "Departure Date", "Arrival Date", "Origin",
+                                        "Destination", "Number of seat 1", "Number of seat 2")
+
+    # Format columns
+    all_flight_table_view.column("#0", width=0, stretch=NO)
+    all_flight_table_view.column("Flight ID", anchor=W, width=80)
+    all_flight_table_view.column("Plane ID", anchor=W, width=80)
+    all_flight_table_view.column("Departure Date", anchor=CENTER, width=100)
+    all_flight_table_view.column("Arrival Date", anchor=CENTER, width=80)
+    all_flight_table_view.column("Origin", anchor=CENTER, width=80)
+    all_flight_table_view.column("Destination", anchor=CENTER, width=80)
+    all_flight_table_view.column("Number of seat 1", anchor=E, width=120)
+    all_flight_table_view.column("Number of seat 2", anchor=E, width=120)
+
+    # Create heading
+    all_flight_table_view.heading("#0", text="", anchor=W)
+    all_flight_table_view.heading("Flight ID", text="Flight ID", anchor=CENTER)
+    all_flight_table_view.heading("Plane ID", text="Plane ID", anchor=CENTER)
+    all_flight_table_view.heading("Departure Date", text="Departure Date", anchor=CENTER)
+    all_flight_table_view.heading("Arrival Date", text="Arrival Date", anchor=CENTER)
+    all_flight_table_view.heading("Origin", text="Origin", anchor=CENTER)
+    all_flight_table_view.heading("Destination", text="Destination", anchor=CENTER)
+    all_flight_table_view.heading("Number of seat 1", text="Available seat type 1", anchor=CENTER)
+    all_flight_table_view.heading("Number of seat 2", text="Available seat type 2", anchor=CENTER)
+
+    count = 0
+    for flight in flights:
+        all_flight_table_view.insert(parent='', index='end', iid=str(count), text="", values=(str(flight[0]),
+                                                                                              str(flight[1]),
+                                                                                              str(flight[2]),
+                                                                                              str(flight[3]),
+                                                                                              str(flight[5]),
+                                                                                              str(flight[4]),
+                                                                                              str(flight[6]),
+                                                                                              str(flight[7]),))
+        count += 1
+
+    all_flight_table_view.pack(padx=20, pady=20)
 
     conn.commit()
     conn.close()
