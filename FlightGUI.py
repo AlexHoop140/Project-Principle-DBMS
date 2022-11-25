@@ -1,7 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-
-import main as mn
 import mysql.connector
 import sys
 
