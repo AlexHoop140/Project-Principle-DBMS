@@ -1,9 +1,7 @@
 from tkinter import *
-from PIL import Image, ImageTk
 import main as mn
 import mysql.connector
 import sys
-import random
 
 
 window = Tk()
@@ -57,7 +55,7 @@ def plane_submit():
                     plane_name_entry.get(),
                     plane_totalseat_entry.get(),
                     plane_seat1_entry.get(),
-                    plane_seat1_entry.get(),
+                    plane_seat2_entry.get(),
                     plane_manu_entry.get()
                 ))
 
@@ -69,7 +67,7 @@ def plane_submit():
     plane_name_entry.delete(0, END)
     plane_totalseat_entry.delete(0, END)
     plane_seat1_entry.delete(0, END)
-    plane_seat1_entry.delete(0, END)
+    plane_seat2_entry.delete(0, END)
     plane_manu_entry.delete(0, END)
 
 def plane_show():
@@ -216,6 +214,214 @@ def edit():
     conn.commit()
     conn.close()
 
+#Flight function to Add Show Delete & Update
+def flight_submit():
+    #create database connection
+    conn = mysql.connector.connect(
+        user="root",
+        password="FzrTscd0aGODkVIUXtsa",
+        host="containers-us-west-44.railway.app",
+        port=5960,
+        database="railway"
+    )
+    cur = conn.cursor()
+
+    # Insert into table
+    cur.execute("INSERT INTO FLIGHT VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                (
+                    flight_entry0.get(),
+                    flight_entry1.get(),
+                    flight_entry2.get(),
+                    flight_entry3.get(),
+                    flight_entry4.get(),
+                    flight_entry5.get(),
+                    flight_entry6.get(),
+                    flight_entry7.get(),
+                    flight_entry8.get()
+                ))
+
+    conn.commit()
+    conn.close()
+
+    #clear current type in content
+    flight_entry0.delete(0, END)
+    flight_entry1.delete(0, END)
+    flight_entry2.delete(0, END)
+    flight_entry3.delete(0, END)
+    flight_entry4.delete(0, END)
+    flight_entry5.delete(0, END)
+    flight_entry6.delete(0, END)
+    flight_entry7.delete(0, END)
+    flight_entry8.delete(0, END)
+
+def flight_show():
+    conn = mysql.connector.connect(
+        user="root",
+        password="FzrTscd0aGODkVIUXtsa",
+        host="containers-us-west-44.railway.app",
+        port=5960,
+        database="railway"
+    )
+    cur = conn.cursor()
+
+    # Show database
+    flight_show = Toplevel(window)
+    cur.execute("SELECT * FROM FLIGHT")
+    records = cur.fetchall()
+
+    print_record = ''
+    for record in records:
+        print_record += str(record) + "\n"
+
+    show_label = Label(flight_show, text=print_record)
+    show_label.grid(row=10, column=0, columnspan=2)
+
+    conn.commit()
+    conn.close()
+
+def flight_delete():
+    conn = mysql.connector.connect(
+        user="root",
+        password="FzrTscd0aGODkVIUXtsa",
+        host="containers-us-west-44.railway.app",
+        port=5960,
+        database="railway"
+    )
+    cur = conn.cursor()
+
+    #delete
+    cur.execute("DELETE FROM FLIGHT WHERE FLIGHTID=" + "\'" +(flight_entry9.get()) + "\'")
+
+    flight_entry9.delete(0, END)
+
+    conn.commit()
+    conn.close()
+
+def flight_update():
+    conn = mysql.connector.connect(
+        user="root",
+        password="FzrTscd0aGODkVIUXtsa",
+        host="containers-us-west-44.railway.app",
+        port=5960,
+        database="railway"
+    )
+    cur = conn.cursor()
+
+    cur.execute("UPDATE FLIGHT SET "
+                "FLIGHTID = %s, "
+                "PLANEID = %s, "
+                "DEPARTURE_DATE = %s, "
+                "ARRIVAL_DATE = %s, "
+                "DESTINATION = %s, "
+                "ORIGIN = %s, "
+                "QUANTITY_SEAT1 = %s, "
+                "QUANTITY_SEAT2 = %s, "
+                "NOTE = %s "
+                "WHERE FLIGHTID=" + "\'" +(f_entry0_editor.get()) + "\'",
+                (
+                    f_entry0_editor.get(),
+                    f_entry1_editor.get(),
+                    f_entry2_editor.get(),
+                    f_entry3_editor.get(),
+                    f_entry4_editor.get(),
+                    f_entry5_editor.get(),
+                    f_entry6_editor.get(),
+                    f_entry7_editor.get(),
+                    f_entry8_editor.get()
+                ))
+
+    conn.commit()
+    conn.close()
+    flight_editor.destroy()
+def flight_edit():
+    global flight_editor
+    flight_editor = Toplevel(window)
+    flight_editor.title('Update Plane')
+    flight_editor.geometry("400x300")
+
+    conn = mysql.connector.connect(
+        user="root",
+        password="FzrTscd0aGODkVIUXtsa",
+        host="containers-us-west-44.railway.app",
+        port=5960,
+        database="railway"
+    )
+    cur = conn.cursor()
+
+    #Edit plane
+    cur.execute("SELECT * FROM FLIGHT WHERE FLIGHTID=" + "\'" +(flight_entry9.get()) + "\'")
+    flight_records = cur.fetchall()
+
+    #define global var
+    global f_entry0_editor
+    global f_entry1_editor
+    global f_entry2_editor
+    global f_entry3_editor
+    global f_entry4_editor
+    global f_entry5_editor
+    global f_entry6_editor
+    global f_entry7_editor
+    global f_entry8_editor
+
+    # Plane textbox
+    f_entry0_editor = Entry(flight_editor, width=30)
+    f_entry0_editor.grid(row=0, column=1, padx=20)
+    f_entry1_editor = Entry(flight_editor, width=30)
+    f_entry1_editor.grid(row=1, column=1, padx=20)
+    f_entry2_editor = Entry(flight_editor, width=30)
+    f_entry2_editor.grid(row=2, column=1, padx=20)
+    f_entry3_editor = Entry(flight_editor, width=30)
+    f_entry3_editor.grid(row=3, column=1, padx=20)
+    f_entry4_editor = Entry(flight_editor, width=30)
+    f_entry4_editor.grid(row=4, column=1, padx=20)
+    f_entry5_editor = Entry(flight_editor, width=30)
+    f_entry5_editor.grid(row=5, column=1, padx=20)
+    f_entry6_editor = Entry(flight_editor, width=30)
+    f_entry6_editor.grid(row=6, column=1, padx=20)
+    f_entry7_editor = Entry(flight_editor, width=30)
+    f_entry7_editor.grid(row=7, column=1, padx=20)
+    f_entry8_editor = Entry(flight_editor, width=30)
+    f_entry8_editor.grid(row=8, column=1, padx=20)
+
+    # Plane insert textbox label
+    f_label0_editor = Label(flight_editor, text="Flight ID")
+    f_label0_editor.grid(row=0, column=0)
+    f_label1_editor = Label(flight_editor, text="Plane Plane")
+    f_label1_editor.grid(row=1, column=0)
+    f_label2_editor = Label(flight_editor, text="Departure Date")
+    f_label2_editor.grid(row=2, column=0)
+    f_label3_editor = Label(flight_editor, text="Landing Date")
+    f_label3_editor.grid(row=3, column=0)
+    f_label4_editor = Label(flight_editor, text="Destination")
+    f_label4_editor.grid(row=4, column=0)
+    f_label5_editor = Label(flight_editor, text="Origin")
+    f_label5_editor.grid(row=5, column=0)
+    f_label6_editor = Label(flight_editor, text="Number of s1")
+    f_label6_editor.grid(row=6, column=0)
+    f_label7_editor = Label(flight_editor, text="Number of s2")
+    f_label7_editor.grid(row=7, column=0)
+    f_label8_editor = Label(flight_editor, text="Note")
+    f_label8_editor.grid(row=8, column=0)
+
+    #Insert default value
+    for record in flight_records:
+        f_entry0_editor.insert(0, record[0])
+        f_entry1_editor.insert(0, record[1])
+        f_entry2_editor.insert(0, record[2])
+        f_entry3_editor.insert(0, record[3])
+        f_entry4_editor.insert(0, record[4])
+        f_entry5_editor.insert(0, record[5])
+        f_entry6_editor.insert(0, record[6])
+        f_entry7_editor.insert(0, record[7])
+        f_entry8_editor.insert(0, record[8])
+
+    # Plane update Save button
+    f_save_btn = Button(flight_editor, text="Save", command=flight_update)
+    f_save_btn.grid(row=9, column=0, columnspan=2, padx=10, pady=10, ipadx=145)
+
+    conn.commit()
+    conn.close()
+
 background_img = PhotoImage(file = f"img/AirportManagement/background.png")
 background = canvas.create_image(
     808.0, 229.0,
@@ -246,12 +452,12 @@ def plane_management_click():
         165.0, 423.5,
         image=plane_background_img)
 
-    global plane_id_entry_img
-    global plane_name_entry_img
-    global plane_totalseat_entry_img
-    global plane_seat1_entry_img
-    global plane_seat2_entry_img
-    global plane_manu_entry_img
+    global plane_id_entry
+    global plane_name_entry
+    global plane_totalseat_entry
+    global plane_seat1_entry
+    global plane_seat2_entry
+    global plane_manu_entry
 
 
     plane_id_entry_img = PhotoImage(file=f"img/Plane/img_textBox0.png")
@@ -318,18 +524,18 @@ def plane_management_click():
         width=187,
         height=35)
 
-    plane_seat1_entry_img = PhotoImage(file=f"img/Plane/img_textBox4.png")
+    plane_seat2_entry_img = PhotoImage(file=f"img/Plane/img_textBox4.png")
     plane_seat1_entry_bg = plane_canvas.create_image(
         405.5, 323.5,
         image=plane_seat1_entry_img)
 
-    plane_seat1_entry = Entry(
+    plane_seat2_entry = Entry(
         plane_window,
         bd=0,
         bg="#d9d9d9",
         highlightthickness=0)
 
-    plane_seat1_entry.place(
+    plane_seat2_entry.place(
         x=312, y=305,
         width=187,
         height=35)
@@ -447,16 +653,16 @@ def flight_management_click():
 
     # set global all img
     global flight_background_img
-    global flight_entry0_img
-    global flight_entry1_img
-    global flight_entry2_img
-    global flight_entry3_img
-    global flight_entry4_img
-    global flight_entry5_img
-    global flight_entry6_img
-    global flight_entry7_img
-    global flight_entry8_img
-    global flight_entry9_img
+    global flight_entry0
+    global flight_entry1
+    global flight_entry2
+    global flight_entry3
+    global flight_entry4
+    global flight_entry5
+    global flight_entry6
+    global flight_entry7
+    global flight_entry8
+    global flight_entry9
     global flight_img0
     global flight_img1
     global flight_img2
@@ -617,7 +823,7 @@ def flight_management_click():
         image=flight_img0,
         borderwidth=0,
         highlightthickness=0,
-        command=btn_clicked,
+        command=flight_submit,
         relief="flat")
 
     flight_b0.place(
@@ -631,7 +837,7 @@ def flight_management_click():
         image=flight_img1,
         borderwidth=0,
         highlightthickness=0,
-        command=btn_clicked,
+        command=flight_show,
         relief="flat")
 
     flight_b1.place(
@@ -661,7 +867,7 @@ def flight_management_click():
         image=flight_img2,
         borderwidth=0,
         highlightthickness=0,
-        command=btn_clicked,
+        command=flight_edit,
         relief="flat")
 
     flight_b2.place(
@@ -675,7 +881,7 @@ def flight_management_click():
         image=flight_img3,
         borderwidth=0,
         highlightthickness=0,
-        command=btn_clicked,
+        command=flight_delete,
         relief="flat")
 
     flight_b3.place(
