@@ -27,7 +27,7 @@ def passenger_management_ui(inputID, inputPassword):
         messagebox.showinfo("Error!", "Sorry, Passenger is not existed!")
 
     def btn_ticket():
-        bk.employee_management_ui(inputID)
+        bk.passenger_management_ui(inputID)
 
     def btn_flight():
         conn = mysql.connector.connect(
