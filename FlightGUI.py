@@ -189,7 +189,7 @@ def employee_management_ui():
         conn.close()
         editor.destroy()
 
-    def edit():
+    def plane_edit():
         global editor
         editor = Tk()
         editor.title('Update Plane')
@@ -514,6 +514,416 @@ def employee_management_ui():
         conn.commit()
         conn.close()
 
+    # Employee function to Add Show Delete & Update
+    def employee_submit():
+        # create database connection
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Insert into table
+        cur.execute("INSERT INTO EMPLOYEE VALUES(%s, %s, %s, %s, %s)",
+                    (
+                        employee_entry0.get(),
+                        employee_entry1.get(),
+                        employee_entry2.get(),
+                        employee_entry3.get(),
+                        employee_entry4.get()
+                    ))
+
+        conn.commit()
+        conn.close()
+
+        # clear current type in content
+        employee_entry0.delete(0, END)
+        employee_entry1.delete(0, END)
+        employee_entry2.delete(0, END)
+        employee_entry3.delete(0, END)
+        employee_entry4.delete(0, END)
+
+    def employee_show():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Show database
+        cur.execute("SELECT * FROM EMPLOYEE")
+        employees = cur.fetchall()
+
+        # print_record = ''
+        # for record in records:
+        #     print_record += str(record) + "\n"
+        #
+        # show_label = Label(flight_show, text=print_record)
+        # show_label.grid(row=10, column=0, columnspan=2)
+
+        all_employee_window = Toplevel()
+        all_employee_window.title("All employees information")
+
+        all_employees_table_view = ttk.Treeview(all_employee_window)
+
+        # User Interface Section
+        # Define column
+        all_employees_table_view['columns'] = ("Emp ID", "Emp Name", "Emp Add", "Phone Num", "Position")
+
+        # Format columns
+        all_employees_table_view.column("#0", width=0, stretch=NO)
+        all_employees_table_view.column("Emp ID", anchor=W, width=80)
+        all_employees_table_view.column("Emp Name", anchor=W, width=80)
+        all_employees_table_view.column("Emp Add", anchor=CENTER, width=100)
+        all_employees_table_view.column("Phone Num", anchor=CENTER, width=80)
+        all_employees_table_view.column("Position", anchor=CENTER, width=80)
+
+        # Create heading
+        all_employees_table_view.heading("#0", text="", anchor=W)
+        all_employees_table_view.heading("Emp ID", text="Emp ID", anchor=CENTER)
+        all_employees_table_view.heading("Emp Name", text="Emp Name", anchor=CENTER)
+        all_employees_table_view.heading("Emp Add", text="Emp Add", anchor=CENTER)
+        all_employees_table_view.heading("Phone Num", text="Phone Num", anchor=CENTER)
+        all_employees_table_view.heading("Position", text="Position", anchor=CENTER)
+
+        count = 0
+        for employee in employees:
+            all_employees_table_view.insert(parent='', index='end', iid=str(count), text="", values=(str(employee[0]),
+                                                                                                  str(employee[1]),
+                                                                                                  str(employee[2]),
+                                                                                                  str(employee[3]),
+                                                                                                  str(employee[4])))
+            count += 1
+
+        all_employees_table_view.pack(padx=20, pady=20)
+
+        conn.commit()
+        conn.close()
+
+    def employee_delete():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # delete
+        cur.execute("DELETE FROM EMPLOYEE WHERE EMPID=" + "\'" + (employee_entry5.get()) + "\'")
+
+        employee_entry5.delete(0, END)
+
+        conn.commit()
+        conn.close()
+
+    def employee_update():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        cur.execute("UPDATE EMPLOYEE SET "
+                    "EMPID = %s, "
+                    "EMPNAME = %s, "
+                    "EMPADD = %s, "
+                    "EMPPHONENUM = %s, "
+                    "EMPPOSITION = %s "
+                    "WHERE EMPID=" + "\'" + (e_entry0_editor.get()) + "\'",
+                    (
+                        e_entry0_editor.get(),
+                        e_entry1_editor.get(),
+                        e_entry2_editor.get(),
+                        e_entry3_editor.get(),
+                        e_entry4_editor.get()
+                    ))
+
+        conn.commit()
+        conn.close()
+        employee_editor.destroy()
+
+    def employee_edit():
+        global employee_editor
+        employee_editor = Toplevel(window)
+        employee_editor.title('Update Employee')
+        employee_editor.geometry("400x300")
+
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Edit plane
+        cur.execute("SELECT * FROM EMPLOYEE WHERE EMPID=" + "\'" + (employee_entry5.get()) + "\'")
+        employee_records = cur.fetchall()
+
+        # define global var
+        global e_entry0_editor
+        global e_entry1_editor
+        global e_entry2_editor
+        global e_entry3_editor
+        global e_entry4_editor
+
+        # Plane textbox
+        e_entry0_editor = Entry(employee_editor, width=30)
+        e_entry0_editor.grid(row=0, column=1, padx=20)
+        e_entry1_editor = Entry(employee_editor, width=30)
+        e_entry1_editor.grid(row=1, column=1, padx=20)
+        e_entry2_editor = Entry(employee_editor, width=30)
+        e_entry2_editor.grid(row=2, column=1, padx=20)
+        e_entry3_editor = Entry(employee_editor, width=30)
+        e_entry3_editor.grid(row=3, column=1, padx=20)
+        e_entry4_editor = Entry(employee_editor, width=30)
+        e_entry4_editor.grid(row=4, column=1, padx=20)
+
+
+        # Plane insert textbox label
+        e_label0_editor = Label(employee_editor, text="Employee ID")
+        e_label0_editor.grid(row=0, column=0)
+        e_label1_editor = Label(employee_editor, text="Employee Name")
+        e_label1_editor.grid(row=1, column=0)
+        e_label2_editor = Label(employee_editor, text="Address")
+        e_label2_editor.grid(row=2, column=0)
+        e_label3_editor = Label(employee_editor, text="Phone Number")
+        e_label3_editor.grid(row=3, column=0)
+        e_label4_editor = Label(employee_editor, text="Position")
+        e_label4_editor.grid(row=4, column=0)
+
+        # Insert default value
+        for record in employee_records:
+            e_entry0_editor.insert(0, record[0])
+            e_entry1_editor.insert(0, record[1])
+            e_entry2_editor.insert(0, record[2])
+            e_entry3_editor.insert(0, record[3])
+            e_entry4_editor.insert(0, record[4])
+
+        # Plane update Save button
+        e_save_btn = Button(employee_editor, text="Save", command=employee_update)
+        e_save_btn.grid(row=5, column=0, columnspan=2, padx=10, pady=10, ipadx=145)
+
+        conn.commit()
+        conn.close()
+
+    # Passenger function to Add Show Delete & Update
+    def passenger_submit():
+        # create database connection
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Insert into table
+        cur.execute("INSERT INTO PASSENGER VALUES(%s, %s, %s, %s, %s)",
+                    (
+                        passenger_entry0.get(),
+                        passenger_entry1.get(),
+                        passenger_entry2.get(),
+                        passenger_entry3.get(),
+                        passenger_entry4.get()
+                    ))
+
+        conn.commit()
+        conn.close()
+
+        # clear current type in content
+        passenger_entry0.delete(0, END)
+        passenger_entry1.delete(0, END)
+        passenger_entry2.delete(0, END)
+        passenger_entry3.delete(0, END)
+        passenger_entry4.delete(0, END)
+
+    def passenger_show():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Show database
+        cur.execute("SELECT * FROM PASSENGER")
+        passengers = cur.fetchall()
+
+        # print_record = ''
+        # for record in records:
+        #     print_record += str(record) + "\n"
+        #
+        # show_label = Label(flight_show, text=print_record)
+        # show_label.grid(row=10, column=0, columnspan=2)
+
+        all_passengers_window = Toplevel()
+        all_passengers_window.title("All passengers information")
+
+        all_passengers_table_view = ttk.Treeview(all_passengers_window)
+
+        # User Interface Section
+        # Define column
+        all_passengers_table_view['columns'] = ("Pass ID", "Pass Name", "Phone", "Add", "IDNo")
+
+        # Format columns
+        all_passengers_table_view.column("#0", width=0, stretch=NO)
+        all_passengers_table_view.column("Pass ID", anchor=W, width=80)
+        all_passengers_table_view.column("Pass Name", anchor=W, width=80)
+        all_passengers_table_view.column("Phone", anchor=CENTER, width=100)
+        all_passengers_table_view.column("Add", anchor=CENTER, width=80)
+        all_passengers_table_view.column("IDNo", anchor=CENTER, width=80)
+
+        # Create heading
+        all_passengers_table_view.heading("#0", text="", anchor=W)
+        all_passengers_table_view.heading("Pass ID", text="Pass ID", anchor=CENTER)
+        all_passengers_table_view.heading("Pass Name", text="Pass Name", anchor=CENTER)
+        all_passengers_table_view.heading("Phone", text="Phone", anchor=CENTER)
+        all_passengers_table_view.heading("Add", text="Add", anchor=CENTER)
+        all_passengers_table_view.heading("IDNo", text="IDNo", anchor=CENTER)
+
+        count = 0
+        for passenger in passengers:
+            all_passengers_table_view.insert(parent='', index='end', iid=str(count), text="", values=(str(passenger[0]),
+                                                                                                  str(passenger[1]),
+                                                                                                  str(passenger[2]),
+                                                                                                  str(passenger[3]),
+                                                                                                  str(passenger[4])))
+            count += 1
+
+        all_passengers_table_view.pack(padx=20, pady=20)
+
+        conn.commit()
+        conn.close()
+
+    def passenger_delete():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # delete
+        cur.execute("DELETE FROM PASSENGER WHERE PASSID=" + "\'" + (passenger_entry5.get()) + "\'")
+
+        passenger_entry5.delete(0, END)
+
+        conn.commit()
+        conn.close()
+
+    def passenger_update():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        cur.execute("UPDATE PASSENGER SET "
+                    "PASSID = %s, "
+                    "PASSNAME = %s, "
+                    "PASSPHONENUMBER = %s, "
+                    "PASSADDRESS = %s, "
+                    "PASSIDNO = %s "
+                    "WHERE PASSID=" + "\'" + (pass_entry0_editor.get()) + "\'",
+                    (
+                        pass_entry0_editor.get(),
+                        pass_entry1_editor.get(),
+                        pass_entry2_editor.get(),
+                        pass_entry3_editor.get(),
+                        pass_entry4_editor.get()
+                    ))
+
+        conn.commit()
+        conn.close()
+        passenger_editor.destroy()
+
+    def passenger_edit():
+        global passenger_editor
+        passenger_editor = Toplevel(window)
+        passenger_editor.title('Update Passenger')
+        passenger_editor.geometry("400x300")
+
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Edit plane
+        cur.execute("SELECT * FROM PASSENGER WHERE PASSID=" + "\'" + (passenger_entry5.get()) + "\'")
+        passenger_records = cur.fetchall()
+
+        # define global var
+        global pass_entry0_editor
+        global pass_entry1_editor
+        global pass_entry2_editor
+        global pass_entry3_editor
+        global pass_entry4_editor
+
+        # Plane textbox
+        pass_entry0_editor = Entry(passenger_editor, width=30)
+        pass_entry0_editor.grid(row=0, column=1, padx=20)
+        pass_entry1_editor = Entry(passenger_editor, width=30)
+        pass_entry1_editor.grid(row=1, column=1, padx=20)
+        pass_entry2_editor = Entry(passenger_editor, width=30)
+        pass_entry2_editor.grid(row=2, column=1, padx=20)
+        pass_entry3_editor = Entry(passenger_editor, width=30)
+        pass_entry3_editor.grid(row=3, column=1, padx=20)
+        pass_entry4_editor = Entry(passenger_editor, width=30)
+        pass_entry4_editor.grid(row=4, column=1, padx=20)
+
+
+        # Plane insert textbox label
+        pass_label0_editor = Label(passenger_editor, text="Passenger ID")
+        pass_label0_editor.grid(row=0, column=0)
+        pass_label1_editor = Label(passenger_editor, text="Passenger Name")
+        pass_label1_editor.grid(row=1, column=0)
+        pass_label2_editor = Label(passenger_editor, text="Phone Number")
+        pass_label2_editor.grid(row=2, column=0)
+        pass_label3_editor = Label(passenger_editor, text="Address")
+        pass_label3_editor.grid(row=3, column=0)
+        pass_label4_editor = Label(passenger_editor, text="Identify Number")
+        pass_label4_editor.grid(row=4, column=0)
+
+        # Insert default value
+        for record in passenger_records:
+            pass_entry0_editor.insert(0, record[0])
+            pass_entry1_editor.insert(0, record[1])
+            pass_entry2_editor.insert(0, record[2])
+            pass_entry3_editor.insert(0, record[3])
+            pass_entry4_editor.insert(0, record[4])
+
+        # Plane update Save button
+        e_save_btn = Button(passenger_editor, text="Save", command=passenger_update)
+        e_save_btn.grid(row=5, column=0, columnspan=2, padx=10, pady=10, ipadx=145)
+
+        conn.commit()
+        conn.close()
+
     def btn_clicked():
         print("Button Clicked")
 
@@ -696,7 +1106,7 @@ def employee_management_ui():
             image=plane_img2,
             borderwidth=0,
             highlightthickness=0,
-            command=edit,
+            command=plane_edit,
             relief="flat")
 
         plane_b2.place(
@@ -991,12 +1401,12 @@ def employee_management_ui():
 
         # set global all img
         global employee_background_img
-        global employee_entry0_img
-        global employee_entry1_img
-        global employee_entry2_img
-        global employee_entry3_img
-        global employee_entry4_img
-        global employee_entry5_img
+        global employee_entry0
+        global employee_entry1
+        global employee_entry2
+        global employee_entry3
+        global employee_entry4
+        global employee_entry5
         global employee_img0
         global employee_img1
         global employee_img2
@@ -1093,7 +1503,7 @@ def employee_management_ui():
             image=employee_img0,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=employee_submit,
             relief="flat")
 
         employee_b0.place(
@@ -1107,7 +1517,7 @@ def employee_management_ui():
             image=employee_img1,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=employee_show,
             relief="flat")
 
         employee_b1.place(
@@ -1137,7 +1547,7 @@ def employee_management_ui():
             image=employee_img2,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=employee_edit,
             relief="flat")
 
         employee_b2.place(
@@ -1151,7 +1561,7 @@ def employee_management_ui():
             image=employee_img3,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=employee_delete,
             relief="flat")
 
         employee_b3.place(
@@ -1177,12 +1587,12 @@ def employee_management_ui():
 
         # global all img
         global passenger_background_img
-        global passenger_entry0_img
-        global passenger_entry1_img
-        global passenger_entry2_img
-        global passenger_entry3_img
-        global passenger_entry4_img
-        global passenger_entry5_img
+        global passenger_entry0
+        global passenger_entry1
+        global passenger_entry2
+        global passenger_entry3
+        global passenger_entry4
+        global passenger_entry5
         global passenger_img0
         global passenger_img1
         global passenger_img2
@@ -1279,7 +1689,7 @@ def employee_management_ui():
             image=passenger_img0,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=passenger_submit,
             relief="flat")
 
         passenger_b0.place(
@@ -1293,7 +1703,7 @@ def employee_management_ui():
             image=passenger_img1,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=passenger_show,
             relief="flat")
 
         passenger_b1.place(
@@ -1323,7 +1733,7 @@ def employee_management_ui():
             image=passenger_img2,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=passenger_edit,
             relief="flat")
 
         passenger_b2.place(
@@ -1337,7 +1747,7 @@ def employee_management_ui():
             image=passenger_img3,
             borderwidth=0,
             highlightthickness=0,
-            command=btn_clicked,
+            command=passenger_delete,
             relief="flat")
 
         b3.place(
