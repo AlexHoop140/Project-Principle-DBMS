@@ -1646,7 +1646,7 @@ def employee_management_ui():
             image=ticket_img2,
             borderwidth=0,
             highlightthickness=0,
-            command=ticket_edit,
+            command=ticket_delete,
             relief="flat")
 
         ticket_b2.place(
