@@ -408,5 +408,5 @@ def employee_management_ui(inputID):
         width=293,
         height=62)
 
-    # ticket_window.resizable(False, False)
-    # ticket_window.mainloop()
+    ticket_window.resizable(False, False)
+    ticket_window.mainloop()

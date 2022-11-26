@@ -514,6 +514,192 @@ def employee_management_ui():
         conn.commit()
         conn.close()
 
+    # Ticket function to Show, Edit & Delete
+    def ticket_show():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Show database
+        cur.execute("SELECT * FROM TICKET")
+        tickets = cur.fetchall()
+
+        # print_record = ''
+        # for record in records:
+        #     print_record += str(record) + "\n"
+        #
+        # show_label = Label(flight_show, text=print_record)
+        # show_label.grid(row=10, column=0, columnspan=2)
+
+        all_tickets_window = Toplevel()
+        all_tickets_window.title("All tickets information")
+
+        all_tickets_table_view = ttk.Treeview(all_tickets_window)
+
+        # User Interface Section
+        # Define column
+        all_tickets_table_view['columns'] = ("Ticket ID", "Emp ID", "Pass ID", "Flight ID", "Seat Type", "Total Cost")
+
+        # Format columns
+        all_tickets_table_view.column("#0", width=0, stretch=NO)
+        all_tickets_table_view.column("Ticket ID", anchor=W, width=80)
+        all_tickets_table_view.column("Emp ID", anchor=W, width=80)
+        all_tickets_table_view.column("Pass ID", anchor=CENTER, width=100)
+        all_tickets_table_view.column("Flight ID", anchor=CENTER, width=80)
+        all_tickets_table_view.column("Seat Type", anchor=CENTER, width=80)
+        all_tickets_table_view.column("Total Cost", anchor=CENTER, width=80)
+
+        # Create heading
+        all_tickets_table_view.heading("#0", text="", anchor=W)
+        all_tickets_table_view.heading("Ticket ID", text="Ticket ID", anchor=CENTER)
+        all_tickets_table_view.heading("Emp ID", text="Emp ID", anchor=CENTER)
+        all_tickets_table_view.heading("Pass ID", text="Pass ID", anchor=CENTER)
+        all_tickets_table_view.heading("Flight ID", text="Flight ID", anchor=CENTER)
+        all_tickets_table_view.heading("Seat Type", text="Seat Type", anchor=CENTER)
+        all_tickets_table_view.heading("Total Cost", text="Total Cost", anchor=CENTER)
+
+        count = 0
+        for ticket in tickets:
+            all_tickets_table_view.insert(parent='', index='end', iid=str(count), text="", values=(str(ticket[0]),
+                                                                                                  str(ticket[1]),
+                                                                                                  str(ticket[2]),
+                                                                                                  str(ticket[3]),
+                                                                                                  str(ticket[4]),
+                                                                                                  str(ticket[5])))
+            count += 1
+
+        all_tickets_table_view.pack(padx=20, pady=20)
+
+        conn.commit()
+        conn.close()
+
+    def ticket_delete():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # delete
+        cur.execute("DELETE FROM TICKET WHERE TICKETID=" + "\'" + (ticket_entry0.get()) + "\'")
+
+        ticket_entry0.delete(0, END)
+
+        conn.commit()
+        conn.close()
+
+    def ticket_update():
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        cur.execute("UPDATE TICKET SET "
+                    "TICKETID = %s, "
+                    "EMPID = %s, "
+                    "PASSID = %s, "
+                    "FLIGHTID = %s, "
+                    "SEATTYPE = %s, "
+                    "TOTALCOST = %s "
+                    "WHERE TICKETID=" + "\'" + (ticket_entry0_editor.get()) + "\'",
+                    (
+                        ticket_entry0_editor.get(),
+                        ticket_entry1_editor.get(),
+                        ticket_entry2_editor.get(),
+                        ticket_entry3_editor.get(),
+                        ticket_entry4_editor.get(),
+                        ticket_entry5_editor.get()
+                    ))
+
+        conn.commit()
+        conn.close()
+        ticket_editor.destroy()
+
+    def ticket_edit():
+        global ticket_editor
+        ticket_editor = Toplevel(window)
+        ticket_editor.title('Update Ticket')
+        ticket_editor.geometry("400x300")
+
+        conn = mysql.connector.connect(
+            user="root",
+            password="FzrTscd0aGODkVIUXtsa",
+            host="containers-us-west-44.railway.app",
+            port=5960,
+            database="railway"
+        )
+        cur = conn.cursor()
+
+        # Edit plane
+        cur.execute("SELECT * FROM TICKET WHERE TICKETID=" + "\'" + (ticket_entry0.get()) + "\'")
+        ticket_records = cur.fetchall()
+
+        # define global var
+        global ticket_entry0_editor
+        global ticket_entry1_editor
+        global ticket_entry2_editor
+        global ticket_entry3_editor
+        global ticket_entry4_editor
+        global ticket_entry5_editor
+
+        # ticket textbox
+        ticket_entry0_editor = Entry(ticket_editor, width=30)
+        ticket_entry0_editor.grid(row=0, column=1, padx=20)
+        ticket_entry1_editor = Entry(ticket_editor, width=30)
+        ticket_entry1_editor.grid(row=1, column=1, padx=20)
+        ticket_entry2_editor = Entry(ticket_editor, width=30)
+        ticket_entry2_editor.grid(row=2, column=1, padx=20)
+        ticket_entry3_editor = Entry(ticket_editor, width=30)
+        ticket_entry3_editor.grid(row=3, column=1, padx=20)
+        ticket_entry4_editor = Entry(ticket_editor, width=30)
+        ticket_entry4_editor.grid(row=4, column=1, padx=20)
+        ticket_entry5_editor = Entry(ticket_editor, width=30)
+        ticket_entry5_editor.grid(row=5, column=1, padx=20)
+
+
+        # ticket insert textbox label
+        ticket_label0_editor = Label(ticket_editor, text="Ticket ID")
+        ticket_label0_editor.grid(row=0, column=0)
+        ticket_label1_editor = Label(ticket_editor, text="Employee ID")
+        ticket_label1_editor.grid(row=1, column=0)
+        ticket_label2_editor = Label(ticket_editor, text="Passenger ID")
+        ticket_label2_editor.grid(row=2, column=0)
+        ticket_label3_editor = Label(ticket_editor, text="Flight ID")
+        ticket_label3_editor.grid(row=3, column=0)
+        ticket_label4_editor = Label(ticket_editor, text="Seat Type")
+        ticket_label4_editor.grid(row=4, column=0)
+        ticket_label5_editor = Label(ticket_editor, text="Total Cost")
+        ticket_label5_editor.grid(row=5, column=0)
+
+        # Insert default value
+        for record in ticket_records:
+            ticket_entry0_editor.insert(0, record[0])
+            ticket_entry1_editor.insert(0, record[2])
+            ticket_entry2_editor.insert(0, record[2])
+            ticket_entry3_editor.insert(0, record[3])
+            ticket_entry4_editor.insert(0, record[4])
+            ticket_entry5_editor.insert(0, record[5])
+
+        # ticket update Save button
+        t_save_btn = Button(ticket_editor, text="Save", command=ticket_update)
+        t_save_btn.grid(row=6, column=0, columnspan=2, padx=10, pady=10, ipadx=145)
+
+        conn.commit()
+        conn.close()
+
+
     # Employee function to Add Show Delete & Update
     def employee_submit():
         # create database connection
@@ -1383,6 +1569,91 @@ def employee_management_ui():
             width=187,
             height=62)
 
+    def ticket_management_click():
+        ticket_window = Toplevel(window)
+
+        global ticket_background_img
+        global ticket_entry0
+        global ticket_img0
+        global ticket_img1
+        global ticket_img2
+
+        ticket_window.geometry("600x400")
+        ticket_window.configure(bg="#000000")
+        ticket_window.title('Ticket Management')
+        ticket_canvas = Canvas(
+            ticket_window,
+            bg="#000000",
+            height=400,
+            width=600,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge")
+        ticket_canvas.place(x=0, y=0)
+
+        ticket_background_img = PhotoImage(file=f"img/e_ticket/background.png")
+        ticket_background = ticket_canvas.create_image(
+            359.0, 358.0,
+            image=ticket_background_img)
+
+        ticket_img0 = PhotoImage(file=f"img/e_ticket/img0.png")
+        ticket_b0 = Button(
+            ticket_window,
+            image=ticket_img0,
+            borderwidth=0,
+            highlightthickness=0,
+            command=ticket_show,
+            relief="flat")
+
+        ticket_b0.place(
+            x=195, y=71,
+            width=187,
+            height=62)
+
+        ticket_entry0_img = PhotoImage(file=f"img/e_ticket/img_textBox0.png")
+        ticket_entry0_bg = ticket_canvas.create_image(
+            290.0, 199.5,
+            image=ticket_entry0_img)
+
+        ticket_entry0 = Entry(
+            ticket_window,
+            bd=0,
+            bg="#d9d9d9",
+            highlightthickness=0)
+
+        ticket_entry0.place(
+            x=82, y=181,
+            width=416,
+            height=35)
+
+        ticket_img1 = PhotoImage(file=f"img/e_ticket/img1.png")
+        ticket_b1 = Button(
+            ticket_window,
+            image=ticket_img1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=ticket_edit,
+            relief="flat")
+
+        ticket_b1.place(
+            x=83, y=266,
+            width=187,
+            height=62)
+
+        ticket_img2 = PhotoImage(file=f"img/e_ticket/img2.png")
+        ticket_b2 = Button(
+            ticket_window,
+            image=ticket_img2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=ticket_edit,
+            relief="flat")
+
+        ticket_b2.place(
+            x=308, y=266,
+            width=187,
+            height=62)
+
     def employee_management_click():
         employee_window = Toplevel(window)
 
@@ -1794,7 +2065,7 @@ def employee_management_ui():
         image=img2,
         borderwidth=0,
         highlightthickness=0,
-        command=plane_management_click,
+        command=ticket_management_click,
         relief="flat")
 
     ticket_button.place(
