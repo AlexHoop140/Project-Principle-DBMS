@@ -409,6 +409,3 @@ def passenger_management_ui(inputID):
     ticket_window.resizable(False, False)
     ticket_window.mainloop()
 
-
-# if __name__ == "__main__":
-#     passenger_management_ui("P000000111")
