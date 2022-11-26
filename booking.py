@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-def employee_management_ui(inputID):
+def passenger_management_ui(inputID):
     from tkinter import ttk
     from tkinter import messagebox
     import random
@@ -32,7 +32,6 @@ def employee_management_ui(inputID):
     global entry6_img
     global img0
     global img1
-
 
     def btn_clicked():
         print("Button Clicked")
@@ -233,8 +232,6 @@ def employee_management_ui(inputID):
         else:
             message_fully_booked_flight(available_seats, seat_type, number_pas)
 
-
-
     # Drop down menu for number of passenger (No of pax)
     noOfPaxOptions = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
     noOfPax = StringVar()
@@ -254,7 +251,8 @@ def employee_management_ui(inputID):
     seatType = StringVar()
     seatType.set(seatTypeOptions[1])
     dropSeatType = OptionMenu(ticket_window, seatType, *seatTypeOptions)
-    dropSeatType.config(indicatoron=False, compound=RIGHT, image=dropDownIcon, width=100, background='#D9D9D9',
+    dropSeatIcon = PhotoImage(file=f"img/ticket/drop-down1.png")
+    dropSeatType.config(indicatoron=False, compound=RIGHT, image=dropSeatIcon, width=100, background='#D9D9D9',
                         activebackground='#fff')
     dropSeatType.place(
         x=185, y=153,
@@ -410,3 +408,4 @@ def employee_management_ui(inputID):
 
     ticket_window.resizable(False, False)
     ticket_window.mainloop()
+

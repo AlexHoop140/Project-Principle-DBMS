@@ -765,7 +765,7 @@ def employee_management_ui():
         # Format columns
         all_employees_table_view.column("#0", width=0, stretch=NO)
         all_employees_table_view.column("Emp ID", anchor=W, width=80)
-        all_employees_table_view.column("Emp Name", anchor=W, width=80)
+        all_employees_table_view.column("Emp Name", anchor=W, width=150)
         all_employees_table_view.column("Emp Add", anchor=CENTER, width=100)
         all_employees_table_view.column("Phone Num", anchor=CENTER, width=80)
         all_employees_table_view.column("Position", anchor=CENTER, width=80)
@@ -970,7 +970,7 @@ def employee_management_ui():
         # Format columns
         all_passengers_table_view.column("#0", width=0, stretch=NO)
         all_passengers_table_view.column("Pass ID", anchor=W, width=80)
-        all_passengers_table_view.column("Pass Name", anchor=W, width=80)
+        all_passengers_table_view.column("Pass Name", anchor=W, width=150)
         all_passengers_table_view.column("Phone", anchor=CENTER, width=100)
         all_passengers_table_view.column("Add", anchor=CENTER, width=80)
         all_passengers_table_view.column("IDNo", anchor=CENTER, width=80)
